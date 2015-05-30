@@ -65,7 +65,7 @@ public class TimelineActivity extends ActionBarActivity {
         client = TwitterApplication.getRestClient(); //singleton client
 
         // Pull to Refresh
-        setUpPullToRefresh();
+        //setUpPullToRefresh();
 
         loadNewTweets();
     }
@@ -121,7 +121,7 @@ public class TimelineActivity extends ActionBarActivity {
                 updateMinTweetIdFromTweetList(tweets);
                 persistTweets(tweets);
                 aTweets.addAll(tweets);
-                swipeContainer.setRefreshing(false);
+                //swipeContainer.setRefreshing(false);
             }
 
             //Failure
@@ -136,7 +136,7 @@ public class TimelineActivity extends ActionBarActivity {
 
                 Toaster.create(TimelineActivity.this, "Sorry, the network appears to be down");
                 Toaster.create(TimelineActivity.this, "Pull to refresh to try again");
-                swipeContainer.setRefreshing(false);
+                //swipeContainer.setRefreshing(false);
             }
         });
     }
@@ -256,6 +256,7 @@ public class TimelineActivity extends ActionBarActivity {
     /**
      * Sets up the pull to refresh functionality
      */
+    /*
     private void setUpPullToRefresh() {
         swipeContainer = (SwipeRefreshLayout) findViewById(R.id.swipeContainer);
         swipeContainer.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
@@ -271,5 +272,6 @@ public class TimelineActivity extends ActionBarActivity {
                 android.R.color.holo_orange_light,
                 android.R.color.holo_red_light);
     }
+    */
 
 }
