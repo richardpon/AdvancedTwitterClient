@@ -65,6 +65,14 @@
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="com.codepath.apps.simpletwitterclient.activities.TimelineActivity" />
         </activity>
+        <activity
+            android:name=".activities.ProfileActivity"
+            android:label="@string/title_activity_profile"
+            android:parentActivityName=".activities.TimelineActivity" >
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="com.codepath.apps.simpletwitterclient.activities.TimelineActivity" />
+        </activity>
     </application>
 
 </manifest>
