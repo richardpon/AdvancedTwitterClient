@@ -2,11 +2,18 @@ package com.codepath.apps.simpletwitterclient.activities;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentManager;
+import android.support.v4.app.FragmentPagerAdapter;
+import android.support.v4.view.ViewPager;
 import android.support.v7.app.ActionBarActivity;
 import android.view.Menu;
 import android.view.MenuItem;
 
+import com.astuetz.PagerSlidingTabStrip;
 import com.codepath.apps.simpletwitterclient.R;
+import com.codepath.apps.simpletwitterclient.fragments.HomeTimelineFragment;
+import com.codepath.apps.simpletwitterclient.fragments.MentionsTimelineFragment;
 import com.codepath.apps.simpletwitterclient.fragments.TweetsListFragment;
 
 public class TimelineActivity extends ActionBarActivity {
@@ -21,6 +28,16 @@ public class TimelineActivity extends ActionBarActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_timeline);
+
+        //get the viewpager
+        ViewPager vpPager = (ViewPager) findViewById(R.id.viewpager);
+        //set the viewpager adapter for the pager
+        vpPager.setAdapter(new TweetsPagerAdapter(getSupportFragmentManager()));
+        //find the sliding tabstrip
+        PagerSlidingTabStrip tabStrip = (PagerSlidingTabStrip) findViewById(R.id.tabs);
+        //attach the tabstrip to the viewpager
+        tabStrip.setViewPager(vpPager);
+
 
 
 
@@ -101,5 +118,41 @@ public class TimelineActivity extends ActionBarActivity {
                 android.R.color.holo_red_light);
     }
     */
+
+
+    // Retun the order of fragments in the view pager
+    public class TweetsPagerAdapter extends FragmentPagerAdapter {
+        final int PAGE_COUNT = 2;
+        private String tabTitles[] = { "Home", "Mentions"};
+
+        //Adapter gets the manager to insert or remove fragment from activity
+        public TweetsPagerAdapter(FragmentManager fm) {
+            super(fm);
+        }
+
+        //The order and creation of fragments within the pager
+        @Override
+        public Fragment getItem(int position) {
+            if (position == 0) {
+                return new HomeTimelineFragment();
+            } else if (position == 1) {
+                return new MentionsTimelineFragment();
+            } else {
+                return null;
+            }
+        }
+
+        // Return the tab title
+        @Override
+        public CharSequence getPageTitle(int position) {
+            return tabTitles[position];
+        }
+
+        // Number of tabs
+        @Override
+        public int getCount() {
+            return tabTitles.length;
+        }
+    }
 
 }
