@@ -21,7 +21,7 @@ public class TweetsListFragment extends Fragment{
     private final static String TAG = "TweetsListFragment";
     private TweetsArrayAdapter aTweets;
     private ArrayList<Tweet> tweets;
-    private ListView lvTweets;
+    protected ListView lvTweets;
 
     private SwipeRefreshLayout swipeContainer;
 

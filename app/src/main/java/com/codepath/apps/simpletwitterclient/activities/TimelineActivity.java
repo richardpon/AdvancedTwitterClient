@@ -22,9 +22,6 @@ public class TimelineActivity extends ActionBarActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_timeline);
 
-        // Set up infinite scroll
-        //setScrollListener();
-
 
 
         // Access the fragment (from layout)
@@ -34,12 +31,10 @@ public class TimelineActivity extends ActionBarActivity {
 
 
 
-
         // Pull to Refresh
         //setUpPullToRefresh();
 
     }
-
 
 
 
@@ -63,24 +58,6 @@ public class TimelineActivity extends ActionBarActivity {
 
 
 
-
-
-
-
-    /**
-     * Sets up infinite scrolling
-     */
-    /*
-    private void setScrollListener() {
-        lvTweets.setOnScrollListener(new EndlessScrollListener() {
-            @Override
-            public void onLoadMore() {
-                fetchTweetsIntoTimeline(minTweetId);
-            }
-        });
-    }
-    */
-
     /**
      * Called when user wants to compose a tweet
      * @param menuItem MenuItem
@@ -103,12 +80,6 @@ public class TimelineActivity extends ActionBarActivity {
             }
         }
     }
-
-
-
-
-
-
 
     /**
      * Sets up the pull to refresh functionality
