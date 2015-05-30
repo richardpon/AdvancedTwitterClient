@@ -16,7 +16,7 @@
     <fragment
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:name="com.codepath.apps.simpletwitterclient.fragments.HomeTimelineFragment"
+        android:name="com.codepath.apps.simpletwitterclient.fragments.MentionsTimelineFragment"
         android:id="@+id/fragment_timeline"
         tools:layout="@layout/fragments_tweets_list"
         android:layout_alignParentTop="true"
