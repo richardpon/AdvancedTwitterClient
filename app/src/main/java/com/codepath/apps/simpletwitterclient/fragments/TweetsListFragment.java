@@ -11,12 +11,16 @@ import android.widget.ListView;
 
 import com.codepath.apps.simpletwitterclient.R;
 import com.codepath.apps.simpletwitterclient.adapters.TweetsArrayAdapter;
+import com.codepath.apps.simpletwitterclient.lib.Network;
+import com.codepath.apps.simpletwitterclient.lib.Toaster;
 import com.codepath.apps.simpletwitterclient.models.Tweet;
+import com.codepath.apps.simpletwitterclient.networking.TwitterApplication;
+import com.codepath.apps.simpletwitterclient.networking.TwitterClient;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class TweetsListFragment extends Fragment{
+public abstract class TweetsListFragment extends Fragment{
 
     private final static String TAG = "TweetsListFragment";
     private TweetsArrayAdapter aTweets;
@@ -25,6 +29,8 @@ public class TweetsListFragment extends Fragment{
 
     private SwipeRefreshLayout swipeContainer;
 
+    protected TwitterClient client;
+    protected long minTweetId; //Long.MAX_VALUE;
 
 
 
@@ -51,13 +57,65 @@ public class TweetsListFragment extends Fragment{
         tweets = new ArrayList<>();
         // construct the adapter
         aTweets = new TweetsArrayAdapter(getActivity(), tweets);
+
+        //get the client
+        client = TwitterApplication.getRestClient(); //singleton client
+
+        // Clear Tweets and reset state
+        clearTweets();
     }
 
     public void addAll(List<Tweet> tweets) {
         aTweets.addAll(tweets);
     }
 
-    public void clear() {
+    public void clearTweets() {
         aTweets.clear();
+        minTweetId = Long.parseLong("922337203685477580");
+    }
+
+    /**
+     * This method loads tweets into the timeline from persistent cache
+     */
+    protected abstract void loadTweetsFromCache();
+
+    /**
+     * Loads tweets into the timeline from the network
+     */
+    protected abstract void loadTweetsFromNetwork();
+
+
+
+    /**
+     * This gets tweets for the first time. It will either fetch from the network if available
+     * or load from persistent cache
+     */
+    protected void loadTweets() {
+
+        Network network = new Network();
+        if (network.isNetworkAvailable(getActivity())) {
+            loadTweetsFromNetwork();
+            //fetchSignedInUsersProfile();
+
+        } else {
+            Toaster.create(getActivity(), "Sorry, the network appears to be down. Showing cached data");
+            Toaster.create(getActivity(), "Pull to refresh to try again");
+            loadTweetsFromCache();
+            //swipeContainer.setRefreshing(false);
+        }
+    }
+
+    /**
+     * Keeps track of the minimum tweet id so that new non-dupe tweets can be fetched
+     */
+    protected void updateMinTweetIdFromTweetList(ArrayList<Tweet> tweetsArray) {
+        long curTweetId;
+
+        for(int i = 0; i < tweetsArray.size() ; i++) {
+            curTweetId = tweetsArray.get(i).getUid();
+            if (curTweetId < minTweetId) {
+                minTweetId = curTweetId;
+            }
+        }
     }
 }
