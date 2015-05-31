@@ -94,6 +94,15 @@ url: GET statuses/home_timeline.json
         getClient().get(apiUrl, params, handler);
     }
 
+    public void getUserTimeline(String screenName, AsyncHttpResponseHandler handler) {
+        String apiUrl = getApiUrl("statuses/user_timeline.json");
+        //Specify Params
+        RequestParams params = new RequestParams();
+        params.put("count", 25);
+        params.put("screen_name", screenName);
+        // Execute
+        getClient().get(apiUrl, params, handler);
+    }
 
 
 

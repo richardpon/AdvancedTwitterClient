@@ -1,11 +1,14 @@
 package com.codepath.apps.simpletwitterclient.activities;
 
+
+import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
 
 import com.codepath.apps.simpletwitterclient.R;
+import com.codepath.apps.simpletwitterclient.fragments.UserTimelineFragment;
 
 public class ProfileActivity extends ActionBarActivity {
 
@@ -13,6 +16,20 @@ public class ProfileActivity extends ActionBarActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_profile);
+
+        // Get the screen name from the activity that launches this
+        String screenName = getIntent().getStringExtra("screen_name");
+
+        if (savedInstanceState == null) {
+            // Create the user timeline fragment
+            UserTimelineFragment userTimelineFragment = UserTimelineFragment.newInstance(screenName);
+            // Display user timeline fragment within this activity (dynamically)
+            FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
+            ft.replace(R.id.flContainer, userTimelineFragment);
+
+            ft.commit();
+        }
+
     }
 
 
