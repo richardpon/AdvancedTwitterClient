@@ -25,8 +25,8 @@
         android:layout_alignParentTop="true"
         android:layout_alignParentRight="true"
         android:layout_alignParentEnd="true"
-        android:layout_marginRight="10dp"
-        android:layout_marginEnd="10dp"
+        android:paddingRight="10dp"
+        android:paddingEnd="10dp"
         >
         <!-- name -->
         <!-- <com.codepath.apps.simpletwitterclient.customviews.RobotoTextView -->
@@ -80,11 +80,14 @@
         android:id="@+id/tvBody"
         android:textSize="14sp"
         android:layout_marginBottom="10dp"
-        android:layout_marginRight="10dp"
-        android:layout_marginEnd="10dp"
         android:layout_below="@+id/rlUsername"
         android:layout_alignLeft="@+id/rlUsername"
-        android:layout_alignStart="@+id/rlUsername" />
+        android:layout_alignStart="@+id/rlUsername"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentRight="true"
+        android:paddingRight="10dp"
+        android:paddingEnd="10dp"
+        />
 
     <!-- Media (Optional) -->
     <ImageView
@@ -101,5 +104,7 @@
         android:layout_alignRight="@id/tvBody"
         android:layout_alignEnd="@id/tvBody"
         android:contentDescription="@string/tweet_media_description"
+        android:paddingEnd="10dp"
+        android:paddingRight="10dp"
         />
 </RelativeLayout>
