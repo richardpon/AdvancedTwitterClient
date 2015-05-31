@@ -13,6 +13,7 @@
     <string name="tweet_name">Wil Wheaton</string>
     <string name="tweet_body">Missed the East Coast showing of @wilwproject because I was writing @CAH cards with the brilliant Cards Against Humanity tean. TO THE DVR!</string>
     <string name="tweet_media_description">Image embedded inside tweet</string>
+    <string name="tweet_created_at">22m</string>
 
 
     <!-- Timeline Action Bar -->
