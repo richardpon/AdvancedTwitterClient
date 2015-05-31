@@ -38,9 +38,6 @@ public class TimelineActivity extends ActionBarActivity {
         //attach the tabstrip to the viewpager
         tabStrip.setViewPager(vpPager);
 
-
-
-
         // Access the fragment (from layout)
 //        if (savedInstanceState == null) {
 //            fragmentTweetsList = (TweetsListFragment) getSupportFragmentManager().findFragmentById(R.id.fragment_timeline);
@@ -52,7 +49,6 @@ public class TimelineActivity extends ActionBarActivity {
         //setUpPullToRefresh();
 
     }
-
 
 
     @Override
