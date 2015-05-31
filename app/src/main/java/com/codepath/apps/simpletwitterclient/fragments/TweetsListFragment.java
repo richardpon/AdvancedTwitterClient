@@ -13,6 +13,7 @@ import com.codepath.apps.simpletwitterclient.R;
 import com.codepath.apps.simpletwitterclient.adapters.TweetsArrayAdapter;
 import com.codepath.apps.simpletwitterclient.lib.Network;
 import com.codepath.apps.simpletwitterclient.lib.Toaster;
+import com.codepath.apps.simpletwitterclient.listeners.EndlessScrollListener;
 import com.codepath.apps.simpletwitterclient.models.Tweet;
 import com.codepath.apps.simpletwitterclient.networking.TwitterApplication;
 import com.codepath.apps.simpletwitterclient.networking.TwitterClient;
@@ -32,6 +33,9 @@ public abstract class TweetsListFragment extends Fragment{
     protected TwitterClient client;
     protected long minTweetId; //Long.MAX_VALUE;
 
+    // Indicates if all data has been loaded. This prevents infinite scroll from continuously trying
+    // to load new data when there isn't any
+    protected boolean hasLoadedAll;
 
 
     //inflate logic
@@ -72,6 +76,7 @@ public abstract class TweetsListFragment extends Fragment{
     public void clearTweets() {
         aTweets.clear();
         minTweetId = Long.parseLong("922337203685477580");
+        hasLoadedAll = false;
     }
 
     /**
@@ -114,8 +119,20 @@ public abstract class TweetsListFragment extends Fragment{
         for(int i = 0; i < tweetsArray.size() ; i++) {
             curTweetId = tweetsArray.get(i).getUid();
             if (curTweetId < minTweetId) {
-                minTweetId = curTweetId;
+                minTweetId = curTweetId - 1;
             }
         }
+    }
+
+    /**
+     * Sets up infinite scrolling
+     */
+    protected void setScrollListener() {
+        lvTweets.setOnScrollListener(new EndlessScrollListener() {
+            @Override
+            public void onLoadMore() {
+                loadTweetsFromNetwork();
+            }
+        });
     }
 }
