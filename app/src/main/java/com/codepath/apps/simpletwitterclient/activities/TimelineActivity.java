@@ -119,6 +119,13 @@ public class TimelineActivity extends ActionBarActivity {
     }
     */
 
+    public void onProfileView(MenuItem mi) {
+        Intent i = new Intent(this, ProfileActivity.class);
+        startActivity(i);
+    }
+
+
+
 
     // Retun the order of fragments in the view pager
     public class TweetsPagerAdapter extends FragmentPagerAdapter {

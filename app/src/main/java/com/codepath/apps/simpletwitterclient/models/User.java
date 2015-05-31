@@ -18,11 +18,14 @@ public class User extends Model {
         super();
     }
 
-    public User(String name, String screenName, long uid, String profileImageUrl) {
+    public User(String name, String screenName, long uid, String profileImageUrl, String description, int followersCount, int friendsCount) {
         this.name = name;
         this.uid = uid;
         this.screenName = screenName;
         this.profileImageUrl = profileImageUrl;
+        this.description = description;
+        this.followersCount = followersCount;
+        this.friendsCount = friendsCount;
     }
 
     public String getName() {
@@ -45,8 +48,19 @@ public class User extends Model {
         return profileImageUrl;
     }
 
-    // List Attributes
+    public String getDescription() {
+        return description;
+    }
 
+    public int getFriendsCount() {
+        return friendsCount;
+    }
+
+    public int getFollowersCount() {
+        return followersCount;
+    }
+
+    // List Attributes
     @Column(name = "name")
     private String name;
 
@@ -59,6 +73,15 @@ public class User extends Model {
     @Column(name = "profile_image_url")
     private String profileImageUrl;
 
+    @Column(name = "description")
+    private String description;
+
+    @Column(name = "followers_count")
+    private int followersCount;
+
+    @Column(name = "friends_count")
+    private int friendsCount;
+
 
     //deserialize the user json => user
     public static User fromJson(JSONObject json) {
@@ -69,6 +92,9 @@ public class User extends Model {
             u.uid = json.getLong("id");
             u.screenName = json.getString("screen_name");
             u.profileImageUrl = json.getString("profile_image_url");
+            u.description = json.getString("description");
+            u.followersCount = json.getInt("followers_count");
+            u.friendsCount = json.getInt("friends_count");
         } catch (JSONException e) {
             e.printStackTrace();
         }

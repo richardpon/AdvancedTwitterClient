@@ -10,10 +10,7 @@ import android.view.ViewGroup;
 import com.codepath.apps.simpletwitterclient.lib.Logger;
 import com.codepath.apps.simpletwitterclient.lib.Network;
 import com.codepath.apps.simpletwitterclient.lib.Toaster;
-import com.codepath.apps.simpletwitterclient.listeners.EndlessScrollListener;
-import com.codepath.apps.simpletwitterclient.models.SignedInUser;
 import com.codepath.apps.simpletwitterclient.models.Tweet;
-import com.codepath.apps.simpletwitterclient.models.User;
 import com.codepath.apps.simpletwitterclient.networking.TwitterApplication;
 import com.codepath.apps.simpletwitterclient.networking.TwitterClient;
 import com.loopj.android.http.JsonHttpResponseHandler;
@@ -24,12 +21,12 @@ import org.json.JSONObject;
 
 import java.util.ArrayList;
 
-public class HomeTimelineFragment extends TweetsListFragment{
+public class UserTimelineFragment extends TweetsListFragment {
 
-    private final static String TAG = "HomeTimelineFragment";
+    private final static String TAG = "UserTimelineFragment";
 
     private TwitterClient client;
-    private long minTweetId; //Long.MAX_VALUE;
+
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -43,14 +40,28 @@ public class HomeTimelineFragment extends TweetsListFragment{
 
     }
 
+    // Creates a new fragment given an int and title
+    // UserTimelineFragment.newInstance("my_awesome_name");
+    public static UserTimelineFragment newInstance(String screenName) {
+        UserTimelineFragment userTimelineFragment = new UserTimelineFragment();
+        Bundle args = new Bundle();
+        args.putString("screen_name", screenName);
+        userTimelineFragment.setArguments(args);
+        return userTimelineFragment;
+    }
+
+
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup parent, @Nullable Bundle savedInstanceState) {
 
         View v = super.onCreateView(inflater, parent, savedInstanceState);
 
         // Set up infinite scroll
-        // Doesn't work, where to put?
-        setScrollListener();
+
+
+
+        // Doesn't work for mentions, as it keeps trying to fetch as it thinks there isn't enough content
+        //setScrollListener();
 
         loadNewTweets();
 
@@ -61,21 +72,23 @@ public class HomeTimelineFragment extends TweetsListFragment{
      * Send API request to get the timeline json
      * Fill the ListView by creating the tweet objects from json
      */
-    private void fetchTweetsIntoTimeline(long maxTweetId) {
+    private void fetchMentionsIntoTimeline() {
 
-        client.getHomeTimeline(maxTweetId, new JsonHttpResponseHandler() {
+        String screenName = getArguments().getString("screen_name");
+
+        client.getUserTimeline(screenName, new JsonHttpResponseHandler() {
 
             //Success
             @Override
             public void onSuccess(int statusCode, Header[] headers, JSONArray json) {
 
-                Logger.log(TAG, "success fetching tweets into timeline");
+                Logger.log(TAG, "success getting user timeline");
 
                 // deserialize json
                 // create models and add then to the adapter
                 // load model data into listview
                 ArrayList<Tweet> tweets = Tweet.fromJsonArray(json);
-                updateMinTweetIdFromTweetList(tweets);
+                //updateMinTweetIdFromTweetList(tweets);
                 persistTweets(tweets);
                 //aTweets.addAll(tweets);
                 addAll(tweets);
@@ -87,9 +100,10 @@ public class HomeTimelineFragment extends TweetsListFragment{
             //Failure
             @Override
             public void onFailure(int statusCode, Header[] headers, Throwable throwable, JSONObject errorResponse) {
+                Logger.log(TAG, "Failed to user timeline");
 
                 try {
-                    Logger.log(TAG, "No network for timeline tweets "+errorResponse.toString());
+                    Logger.log(TAG, "2 No network " + errorResponse.toString());
                 } catch (Exception e) {
                     //do nothing
                 }
@@ -102,71 +116,33 @@ public class HomeTimelineFragment extends TweetsListFragment{
     }
 
     /**
+     * Clear current Tweets
+     */
+    private void clearTweets() {
+        // Tried to use Long.MAX_VALUE here, but didn't work. Instead used Long.MAX_VALUE/10
+        // This should be large enough
+        // Clear Current tweets
+        //aTweets.clear();
+        clear();
+
+        //minTweetId = Long.parseLong("922337203685477580");
+    }
+
+    /**
      * This loads new tweets for the first time
      */
     private void loadNewTweets() {
 
         Network network = new Network();
         if (network.isNetworkAvailable(getActivity())) {
-            fetchTweetsIntoTimeline(minTweetId);
-            fetchSignedInUsersProfile();
+            fetchMentionsIntoTimeline();
+            //fetchSignedInUsersProfile();
 
         } else {
             Toaster.create(getActivity(), "Sorry, the network appears to be down. Showing cached data");
             Toaster.create(getActivity(), "Pull to refresh to try again");
             loadTweetsFromCache();
             //swipeContainer.setRefreshing(false);
-        }
-    }
-
-    /**
-     * Persists each Tweet into SQLite via Active Android
-     */
-    private void persistTweets(ArrayList<Tweet> tweetsArray) {
-        for(int i = 0; i < tweetsArray.size() ; i++) {
-            Tweet curTweet = tweetsArray.get(i);
-
-            // Save Tweet's user
-            curTweet.getUser().save();
-
-            // Save Tweet
-            curTweet.save();
-        }
-    }
-
-    /**
-     * This fetch's the signed in user's profile
-     */
-    private void fetchSignedInUsersProfile() {
-
-        client.getUserProfile(new JsonHttpResponseHandler() {
-
-            //Success
-            @Override
-            public void onSuccess(int statusCode, Header[] headers, JSONObject json) {
-                User signedInUser = User.fromJson(json);
-                SignedInUser.persistSignedInUser(getActivity(), signedInUser);
-            }
-
-            //Failure
-            @Override
-            public void onFailure(int statusCode, Header[] headers, Throwable throwable, JSONObject errorResponse) {
-                // Do Nothing
-            }
-        });
-    }
-
-    /**
-     * Keeps track of the minimum tweet id so that new non-dupe tweets can be fetched
-     */
-    private void updateMinTweetIdFromTweetList(ArrayList<Tweet> tweetsArray) {
-        long curTweetId;
-
-        for(int i = 0; i < tweetsArray.size() ; i++) {
-            curTweetId = tweetsArray.get(i).getUid();
-            if (curTweetId < minTweetId) {
-                minTweetId = curTweetId;
-            }
         }
     }
 
@@ -181,29 +157,18 @@ public class HomeTimelineFragment extends TweetsListFragment{
     }
 
     /**
-     *  Clear current Tweets
+     * Persists each Tweet into SQLite via Active Android
      */
-    private void clearTweets() {
-        // Tried to use Long.MAX_VALUE here, but didn't work. Instead used Long.MAX_VALUE/10
-        // This should be large enough
-        // Clear Current tweets
-        //aTweets.clear();
-        clear();
+    private void persistTweets(ArrayList<Tweet> tweetsArray) {
+        for (int i = 0; i < tweetsArray.size(); i++) {
+            Tweet curTweet = tweetsArray.get(i);
 
-        minTweetId = Long.parseLong("922337203685477580");
+            // Save Tweet's user
+            curTweet.getUser().save();
+
+            // Save Tweet
+            curTweet.save();
+        }
     }
-
-    /**
-     * Sets up infinite scrolling
-     */
-    private void setScrollListener() {
-        lvTweets.setOnScrollListener(new EndlessScrollListener() {
-            @Override
-            public void onLoadMore() {
-                fetchTweetsIntoTimeline(minTweetId);
-            }
-        });
-    }
-
 
 }

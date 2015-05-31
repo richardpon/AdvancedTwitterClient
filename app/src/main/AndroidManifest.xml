@@ -28,7 +28,7 @@
             android:value="RestClient.db" />
         <meta-data
             android:name="AA_DB_VERSION"
-            android:value="3" />
+            android:value="4" />
 
         <!-- Login -->
         <activity
@@ -60,6 +60,14 @@
         <activity
             android:name=".activities.ComposeActivity"
             android:label="@string/title_activity_compose"
+            android:parentActivityName=".activities.TimelineActivity" >
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="com.codepath.apps.simpletwitterclient.activities.TimelineActivity" />
+        </activity>
+        <activity
+            android:name=".activities.ProfileActivity"
+            android:label="@string/title_activity_profile"
             android:parentActivityName=".activities.TimelineActivity" >
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
