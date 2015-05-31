@@ -76,7 +76,7 @@ public class MentionsTimelineFragment extends TweetsListFragment {
                 // load model data into listview
                 ArrayList<Tweet> tweets = Tweet.fromJsonArray(json);
                 //updateMinTweetIdFromTweetList(tweets);
-                persistTweets(tweets);
+                Tweet.persistTweets(tweets);
                 //aTweets.addAll(tweets);
                 addAll(tweets);
 
@@ -117,21 +117,6 @@ public class MentionsTimelineFragment extends TweetsListFragment {
             Toaster.create(getActivity(), "Pull to refresh to try again");
             loadTweetsFromCache();
             //swipeContainer.setRefreshing(false);
-        }
-    }
-
-    /**
-     * Persists each Tweet into SQLite via Active Android
-     */
-    private void persistTweets(ArrayList<Tweet> tweetsArray) {
-        for (int i = 0; i < tweetsArray.size(); i++) {
-            Tweet curTweet = tweetsArray.get(i);
-
-            // Save Tweet's user
-            curTweet.getUser().save();
-
-            // Save Tweet
-            curTweet.save();
         }
     }
 
