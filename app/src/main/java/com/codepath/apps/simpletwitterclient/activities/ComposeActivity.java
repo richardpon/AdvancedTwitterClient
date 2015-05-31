@@ -2,6 +2,7 @@ package com.codepath.apps.simpletwitterclient.activities;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.v4.app.NavUtils;
 import android.support.v7.app.ActionBarActivity;
 import android.support.v7.internal.view.menu.ActionMenuItemView;
 import android.text.Editable;
@@ -78,6 +79,14 @@ public class ComposeActivity extends ActionBarActivity {
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
+
+        switch (item.getItemId()) {
+            // Respond to Up navigation. Return to previous TimelineActivity state
+            case android.R.id.home:
+                NavUtils.navigateUpFromSameTask(this);
+                return true;
+        }
+
         return super.onOptionsItemSelected(item);
     }
 

@@ -2,7 +2,6 @@ package com.codepath.apps.simpletwitterclient.networking;
 
 import android.content.Context;
 
-import com.codepath.apps.simpletwitterclient.lib.Logger;
 import com.codepath.oauth.OAuthBaseClient;
 import com.loopj.android.http.AsyncHttpResponseHandler;
 import com.loopj.android.http.RequestParams;
@@ -81,8 +80,6 @@ url: GET statuses/home_timeline.json
     }
 
     public void getMentionsTimeline(AsyncHttpResponseHandler handler) {
-
-        Logger.log(TAG, "getting mentions");
 
         String apiUrl = getApiUrl("statuses/mentions_timeline.json");
 

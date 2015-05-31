@@ -55,7 +55,8 @@
         <!-- Timeline -->
         <activity
             android:name=".activities.TimelineActivity"
-            android:label="@string/title_activity_timeline" >
+            android:label="@string/title_activity_timeline"
+            android:launchMode="singleTop">
         </activity>
         <activity
             android:name=".activities.ComposeActivity"
