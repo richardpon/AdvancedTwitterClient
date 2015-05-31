@@ -20,6 +20,9 @@ public class SignedInUser {
         edit.putString("name", signedInUser.getName());
         edit.putLong("id", signedInUser.getUid());
         edit.putString("profileUrl", signedInUser.getProfileImageUrl());
+        edit.putString("description", signedInUser.getDescription());
+        edit.putInt("followers_count", signedInUser.getFollowersCount());
+        edit.putInt("friends_count", signedInUser.getFriendsCount());
         edit.apply();
     }
 
@@ -32,7 +35,10 @@ public class SignedInUser {
                 pref.getString("name", ""),
                 pref.getString("screenName", ""),
                 pref.getLong("id", 0),
-                pref.getString("profileUrl", "")
+                pref.getString("profileUrl", ""),
+                pref.getString("description", ""),
+                pref.getInt("followers_count", 0),
+                pref.getInt("friends_count", 0)
         );
         return signedInUser;
     }

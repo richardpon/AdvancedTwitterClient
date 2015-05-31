@@ -76,14 +76,13 @@ public class UserTimelineFragment extends TweetsListFragment {
 
         String screenName = getArguments().getString("screen_name");
 
-        Logger.log(TAG, "going to get mentions");
         client.getUserTimeline(screenName, new JsonHttpResponseHandler() {
 
             //Success
             @Override
             public void onSuccess(int statusCode, Header[] headers, JSONArray json) {
 
-                Logger.log(TAG, "1 network success");
+                Logger.log(TAG, "success getting user timeline");
 
                 // deserialize json
                 // create models and add then to the adapter
@@ -101,7 +100,7 @@ public class UserTimelineFragment extends TweetsListFragment {
             //Failure
             @Override
             public void onFailure(int statusCode, Header[] headers, Throwable throwable, JSONObject errorResponse) {
-                Logger.log(TAG, "Failed to get mentions");
+                Logger.log(TAG, "Failed to user timeline");
 
                 try {
                     Logger.log(TAG, "2 No network " + errorResponse.toString());

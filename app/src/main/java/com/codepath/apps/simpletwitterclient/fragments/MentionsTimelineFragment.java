@@ -63,14 +63,13 @@ public class MentionsTimelineFragment extends TweetsListFragment {
      */
     private void fetchMentionsIntoTimeline() {
 
-        Logger.log(TAG, "going to get mentions");
         client.getMentionsTimeline(new JsonHttpResponseHandler() {
 
             //Success
             @Override
             public void onSuccess(int statusCode, Header[] headers, JSONArray json) {
 
-                Logger.log(TAG, "1 network success");
+                Logger.log(TAG, "network success getting mentions");
 
                 // deserialize json
                 // create models and add then to the adapter

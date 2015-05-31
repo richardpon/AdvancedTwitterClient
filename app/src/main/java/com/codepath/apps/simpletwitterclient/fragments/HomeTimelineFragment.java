@@ -69,7 +69,7 @@ public class HomeTimelineFragment extends TweetsListFragment{
             @Override
             public void onSuccess(int statusCode, Header[] headers, JSONArray json) {
 
-                Logger.log(TAG, "-->network success");
+                Logger.log(TAG, "success fetching tweets into timeline");
 
                 // deserialize json
                 // create models and add then to the adapter
@@ -89,7 +89,7 @@ public class HomeTimelineFragment extends TweetsListFragment{
             public void onFailure(int statusCode, Header[] headers, Throwable throwable, JSONObject errorResponse) {
 
                 try {
-                    Logger.log(TAG, "No network "+errorResponse.toString());
+                    Logger.log(TAG, "No network for timeline tweets "+errorResponse.toString());
                 } catch (Exception e) {
                     //do nothing
                 }

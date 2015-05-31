@@ -29,4 +29,11 @@
     <string name="char_count">0/140</string>
     <string name="title_activity_profile">Profile</string>
 
+    <!-- Profile -->
+    <string name="profile_name">Nathan</string>
+    <string name="profile_tagline">Some old account</string>
+    <string name="profile_followers">5 Followers</string>
+    <string name="profile_following">5 Following</string>
+    <string name="profile_description">User\'s profile image</string>
+
 </resources>
