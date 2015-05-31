@@ -1,21 +1,32 @@
 package com.codepath.apps.simpletwitterclient.activities;
 
 
+import android.os.Bundle;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.ActionBarActivity;
-import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
 
 import com.codepath.apps.simpletwitterclient.R;
 import com.codepath.apps.simpletwitterclient.fragments.UserTimelineFragment;
+import com.codepath.apps.simpletwitterclient.models.SignedInUser;
+import com.codepath.apps.simpletwitterclient.models.User;
+import com.codepath.apps.simpletwitterclient.networking.TwitterClient;
 
 public class ProfileActivity extends ActionBarActivity {
+
+    TwitterClient client;
+    User user;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_profile);
+
+        user = SignedInUser.getSignedInUser(this);
+        getSupportActionBar().setTitle(user.getScreenName());
+
+
 
         // Get the screen name from the activity that launches this
         String screenName = getIntent().getStringExtra("screen_name");
