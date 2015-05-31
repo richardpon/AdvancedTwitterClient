@@ -9,7 +9,6 @@ import android.view.ViewGroup;
 
 import com.codepath.apps.simpletwitterclient.lib.Logger;
 import com.codepath.apps.simpletwitterclient.lib.Toaster;
-import com.codepath.apps.simpletwitterclient.listeners.EndlessScrollListener;
 import com.codepath.apps.simpletwitterclient.models.SignedInUser;
 import com.codepath.apps.simpletwitterclient.models.Tweet;
 import com.codepath.apps.simpletwitterclient.models.User;
@@ -50,6 +49,11 @@ public class HomeTimelineFragment extends TweetsListFragment{
 
         long maxTweetId = this.minTweetId;
 
+        // Don't send network request if all content has been loaded
+        if (hasLoadedAll) {
+            return;
+        }
+
         client.getHomeTimeline(maxTweetId, new JsonHttpResponseHandler() {
 
             //Success
@@ -62,6 +66,11 @@ public class HomeTimelineFragment extends TweetsListFragment{
                 updateMinTweetIdFromTweetList(tweets);
                 Tweet.persistTweets(tweets);
                 addAll(tweets);
+
+                if (tweets.size() == 0) {
+                    Logger.log(TAG, "no content found on network");
+                    hasLoadedAll = true;
+                }
 
                 //swipeContainer.setRefreshing(false);
             }
@@ -82,24 +91,6 @@ public class HomeTimelineFragment extends TweetsListFragment{
             }
         });
     }
-
-    /**
-     * This loads new tweets for the first time
-     */
-//    private void loadNewTweets() {
-//
-//        Network network = new Network();
-//        if (network.isNetworkAvailable(getActivity())) {
-//            fetchTweetsIntoTimeline(minTweetId);
-//            fetchSignedInUsersProfile();
-//
-//        } else {
-//            Toaster.create(getActivity(), "Sorry, the network appears to be down. Showing cached data");
-//            Toaster.create(getActivity(), "Pull to refresh to try again");
-//            loadTweetsFromCache();
-//            //swipeContainer.setRefreshing(false);
-//        }
-//    }
 
     /**
      * This fetch's the signed in user's profile
@@ -131,19 +122,5 @@ public class HomeTimelineFragment extends TweetsListFragment{
         ArrayList existingTweets = (ArrayList) Tweet.getAll();
         addAll(existingTweets);
     }
-
-
-    /**
-     * Sets up infinite scrolling
-     */
-    private void setScrollListener() {
-        lvTweets.setOnScrollListener(new EndlessScrollListener() {
-            @Override
-            public void onLoadMore() {
-                loadTweetsFromNetwork();
-            }
-        });
-    }
-
 
 }

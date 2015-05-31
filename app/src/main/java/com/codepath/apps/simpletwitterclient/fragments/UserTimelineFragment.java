@@ -44,8 +44,7 @@ public class UserTimelineFragment extends TweetsListFragment {
         View v = super.onCreateView(inflater, parent, savedInstanceState);
 
         // Set up infinite scroll
-        // Doesn't work for mentions, as it keeps trying to fetch as it thinks there isn't enough content
-        //setScrollListener();
+        setScrollListener();
 
         loadTweets();
 
@@ -56,8 +55,14 @@ public class UserTimelineFragment extends TweetsListFragment {
     protected void loadTweetsFromNetwork() {
 
         String screenName = getArguments().getString("screen_name");
+        long maxTweetId = this.minTweetId;
 
-        client.getUserTimeline(screenName, new JsonHttpResponseHandler() {
+        // Don't send network request if all content has been loaded
+        if (hasLoadedAll) {
+            return;
+        }
+
+        client.getUserTimeline(maxTweetId, screenName, new JsonHttpResponseHandler() {
 
             //Success
             @Override
@@ -66,8 +71,13 @@ public class UserTimelineFragment extends TweetsListFragment {
                 Logger.log(TAG, "success getting user timeline");
 
                 ArrayList<Tweet> tweets = Tweet.fromJsonArray(json);
+                updateMinTweetIdFromTweetList(tweets);
                 Tweet.persistTweets(tweets);
                 addAll(tweets);
+
+                if (tweets.size() == 0) {
+                    hasLoadedAll = true;
+                }
 
                 //swipeContainer.setRefreshing(false);
             }

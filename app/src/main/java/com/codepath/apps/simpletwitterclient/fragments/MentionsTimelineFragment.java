@@ -9,7 +9,6 @@ import android.view.ViewGroup;
 
 import com.codepath.apps.simpletwitterclient.lib.Logger;
 import com.codepath.apps.simpletwitterclient.lib.Toaster;
-import com.codepath.apps.simpletwitterclient.listeners.EndlessScrollListener;
 import com.codepath.apps.simpletwitterclient.models.Tweet;
 import com.loopj.android.http.JsonHttpResponseHandler;
 
@@ -34,8 +33,7 @@ public class MentionsTimelineFragment extends TweetsListFragment {
         View v = super.onCreateView(inflater, parent, savedInstanceState);
 
         // Set up infinite scroll
-        // Doesn't work for mentions, as it keeps trying to fetch as it thinks there isn't enough content
-        //setScrollListener();
+        setScrollListener();
 
         loadTweets();
 
@@ -45,18 +43,27 @@ public class MentionsTimelineFragment extends TweetsListFragment {
     @Override
     protected void loadTweetsFromNetwork() {
 
-        client.getMentionsTimeline(new JsonHttpResponseHandler() {
+        long maxTweetId = this.minTweetId;
+
+        // Don't send network request if all content has been loaded
+        if (hasLoadedAll) {
+            return;
+        }
+
+        client.getMentionsTimeline(maxTweetId, new JsonHttpResponseHandler() {
 
             //Success
             @Override
             public void onSuccess(int statusCode, Header[] headers, JSONArray json) {
 
-                Logger.log(TAG, "network success getting mentions");
-
                 ArrayList<Tweet> tweets = Tweet.fromJsonArray(json);
-                //updateMinTweetIdFromTweetList(tweets);
+                updateMinTweetIdFromTweetList(tweets);
                 Tweet.persistTweets(tweets);
                 addAll(tweets);
+
+                if (tweets.size() == 0) {
+                    hasLoadedAll = true;
+                }
 
                 //swipeContainer.setRefreshing(false);
             }
@@ -87,26 +94,6 @@ public class MentionsTimelineFragment extends TweetsListFragment {
         // Get all tweets from Storage
         ArrayList existingTweets = (ArrayList) Tweet.getAll();
         addAll(existingTweets);
-    }
-
-
-    /**
-     * Sets up infinite scrolling
-     *
-     *
-     * Need to do something different for mentions as this presents a condition where it keeps
-     * fetching data as there isn't enough content for the scroll listener
-     *
-     * use pages?
-     *
-     */
-    private void setScrollListener() {
-        lvTweets.setOnScrollListener(new EndlessScrollListener() {
-            @Override
-            public void onLoadMore() {
-                loadTweetsFromNetwork();
-            }
-        });
     }
 
 }
