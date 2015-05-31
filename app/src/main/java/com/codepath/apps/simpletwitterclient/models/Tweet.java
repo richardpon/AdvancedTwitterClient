@@ -141,5 +141,22 @@ public class Tweet extends Model {
 
         return tweets;
     }
-    
+
+    /**
+     * This persists the tweets array into SQLite via Active Android
+     * It is used instead of just calling save() on each Tweet as the user needs to be saved
+     * before the actual tweet itself
+     * @param tweetsArray ArrayList<Tweet>
+     */
+    public static void persistTweets(ArrayList<Tweet> tweetsArray) {
+        for(int i = 0; i < tweetsArray.size() ; i++) {
+            Tweet curTweet = tweetsArray.get(i);
+
+            // Save Tweet's user
+            curTweet.getUser().save();
+
+            // Save Tweet
+            curTweet.save();
+        }
+    }
 }
