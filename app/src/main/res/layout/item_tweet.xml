@@ -39,6 +39,8 @@
             android:layout_marginRight="5dp"
             android:layout_marginEnd="5dp"
             android:textSize="14sp"
+            android:maxLength="20"
+            android:ellipsize="end"
             android:textStyle="bold"
              />
 
@@ -51,6 +53,8 @@
             android:layout_alignParentTop="true"
             android:layout_toRightOf="@+id/tvName"
             android:layout_toEndOf="@+id/tvName"
+            android:maxLength="20"
+            android:ellipsize="end"
             android:textSize="12sp"
              />
 
@@ -63,6 +67,7 @@
             android:layout_alignParentRight="true"
             android:layout_alignParentEnd="true"
             android:textSize="12sp"
+            android:text="@string/tweet_created_at"
             />
 
         </RelativeLayout>
