@@ -28,6 +28,7 @@ public class HomeTimelineFragment extends TweetsListFragment{
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
+        fetchAndSaveSignedInUsersProfile();
     }
 
     @Override
@@ -93,9 +94,13 @@ public class HomeTimelineFragment extends TweetsListFragment{
     }
 
     /**
-     * This fetch's the signed in user's profile
+     * This fetch's the signed in user's profile if it is not already saved
      */
-    private void fetchSignedInUsersProfile() {
+    private void fetchAndSaveSignedInUsersProfile() {
+
+        if (SignedInUser.isSignedInUserSaved(getActivity())) {
+            return;
+        }
 
         client.getUserProfile(new JsonHttpResponseHandler() {
 
