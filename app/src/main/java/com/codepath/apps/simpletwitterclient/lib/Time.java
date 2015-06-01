@@ -38,6 +38,11 @@ public class Time {
     public static String getTimeAgo(String rawJsonDate) {
         String longFormat = Time.getRelativeTimeAgo(rawJsonDate);
         String[] parts = longFormat.split(" ");
+
+        // Hack, as occasionally, the longFormat is "Yesterday"
+        if (parts.length < 2) {
+            return "1d";
+        }
         return parts[0] + parts[1].substring(0,1);
     }
 
