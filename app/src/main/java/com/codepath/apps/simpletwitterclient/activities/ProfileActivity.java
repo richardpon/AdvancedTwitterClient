@@ -12,13 +12,9 @@ import android.widget.TextView;
 import com.codepath.apps.simpletwitterclient.R;
 import com.codepath.apps.simpletwitterclient.fragments.UserTimelineFragment;
 import com.codepath.apps.simpletwitterclient.models.User;
-import com.codepath.apps.simpletwitterclient.networking.TwitterClient;
 import com.squareup.picasso.Picasso;
 
 public class ProfileActivity extends ActionBarActivity {
-
-    TwitterClient client;
-    User user;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -51,12 +47,14 @@ public class ProfileActivity extends ActionBarActivity {
         TextView tvTagline = (TextView) findViewById(R.id.tvTagline);
         TextView tvFollowers = (TextView) findViewById(R.id.tvFollowers);
         TextView tvFollowing = (TextView) findViewById(R.id.tvFollowing);
+        TextView tvNumTweets = (TextView) findViewById(R.id.tvNumTweets);
         ImageView ivProfileImage = (ImageView) findViewById(R.id.ivProfileImage);
 
         tvName.setText(user.getName());
         tvTagline.setText(user.getDescription());
         tvFollowers.setText(user.getFollowersCount() + " Followers");
         tvFollowing.setText(user.getFriendsCount() + " Following");
+        tvNumTweets.setText(user.getTweetsCount() + " Tweets");
         Picasso.with(this).load(user.getProfileImageUrl()).into(ivProfileImage);
     }
 

@@ -23,6 +23,7 @@ public class SignedInUser {
         edit.putString("description", signedInUser.getDescription());
         edit.putInt("followers_count", signedInUser.getFollowersCount());
         edit.putInt("friends_count", signedInUser.getFriendsCount());
+        edit.putInt("tweets_count", signedInUser.getTweetsCount());
         edit.apply();
     }
 
@@ -38,7 +39,8 @@ public class SignedInUser {
                 pref.getString("profileUrl", ""),
                 pref.getString("description", ""),
                 pref.getInt("followers_count", 0),
-                pref.getInt("friends_count", 0)
+                pref.getInt("friends_count", 0),
+                pref.getInt("tweets_count", 0)
         );
         return signedInUser;
     }

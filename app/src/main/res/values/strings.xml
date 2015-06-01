@@ -35,6 +35,7 @@
     <string name="profile_tagline">Some old account</string>
     <string name="profile_followers">5 Followers</string>
     <string name="profile_following">5 Following</string>
+    <string name="profile_num_tweets">525 Tweets</string>
     <string name="profile_description">User\'s profile image</string>
 
 </resources>
