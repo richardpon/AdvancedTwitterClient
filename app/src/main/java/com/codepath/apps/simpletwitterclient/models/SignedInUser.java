@@ -24,6 +24,7 @@ public class SignedInUser {
         edit.putInt("followers_count", signedInUser.getFollowersCount());
         edit.putInt("friends_count", signedInUser.getFriendsCount());
         edit.putInt("tweets_count", signedInUser.getTweetsCount());
+        edit.putString("background_image_url", signedInUser.getBackgroundImageUrl());
         edit.apply();
     }
 
@@ -40,7 +41,8 @@ public class SignedInUser {
                 pref.getString("description", ""),
                 pref.getInt("followers_count", 0),
                 pref.getInt("friends_count", 0),
-                pref.getInt("tweets_count", 0)
+                pref.getInt("tweets_count", 0),
+                pref.getString("background_image_url", "")
         );
         return signedInUser;
     }

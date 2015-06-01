@@ -28,7 +28,8 @@ public class User extends Model implements Parcelable {
                 String description,
                 int followersCount,
                 int friendsCount,
-                int statusesCount) {
+                int statusesCount,
+                String backgroundImageUrl) {
         this.name = name;
         this.uid = uid;
         this.screenName = screenName;
@@ -37,6 +38,7 @@ public class User extends Model implements Parcelable {
         this.followersCount = followersCount;
         this.friendsCount = friendsCount;
         this.statusesCount = statusesCount;
+        this.backgroundImageUrl = backgroundImageUrl;
     }
 
     public String getName() {
@@ -75,6 +77,10 @@ public class User extends Model implements Parcelable {
         return statusesCount;
     }
 
+    public String getBackgroundImageUrl() {
+        return backgroundImageUrl;
+    }
+
     // List Attributes
     @Column(name = "name")
     private String name;
@@ -100,6 +106,8 @@ public class User extends Model implements Parcelable {
     @Column(name = "statuses_count")
     private int statusesCount;
 
+    @Column(name = "background_image_url")
+    private String backgroundImageUrl;
 
 
     //deserialize the user json => user
@@ -115,6 +123,13 @@ public class User extends Model implements Parcelable {
             u.followersCount = json.getInt("followers_count");
             u.friendsCount = json.getInt("friends_count");
             u.statusesCount = json.getInt("statuses_count");
+
+            if (json.getBoolean("profile_use_background_image")) {
+                u.backgroundImageUrl = json.getString("profile_background_image_url");
+            } else {
+                u.backgroundImageUrl = "";
+            }
+
         } catch (JSONException e) {
             e.printStackTrace();
         }
@@ -152,6 +167,7 @@ public class User extends Model implements Parcelable {
         dest.writeInt(followersCount);
         dest.writeInt(friendsCount);
         dest.writeInt(statusesCount);
+        dest.writeString(backgroundImageUrl);
     }
 
     private User(Parcel in) {
@@ -163,6 +179,7 @@ public class User extends Model implements Parcelable {
         followersCount = in.readInt();
         friendsCount = in.readInt();
         statusesCount = in.readInt();
+        backgroundImageUrl = in.readString();
     }
 
     public static Parcelable.Creator<User> CREATOR = new Creator<User>() {
