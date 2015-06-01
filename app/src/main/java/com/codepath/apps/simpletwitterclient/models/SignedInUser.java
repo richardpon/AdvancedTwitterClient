@@ -42,4 +42,14 @@ public class SignedInUser {
         );
         return signedInUser;
     }
+
+    /**
+     * Checks if the signed in user exists
+     * @return boolean
+     */
+    public static boolean isSignedInUserSaved(Context context) {
+        SharedPreferences pref = PreferenceManager.getDefaultSharedPreferences(context);
+        long userId = pref.getLong("id", 0);
+        return userId != 0;
+    }
 }
