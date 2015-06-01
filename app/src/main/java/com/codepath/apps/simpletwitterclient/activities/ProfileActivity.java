@@ -49,13 +49,20 @@ public class ProfileActivity extends ActionBarActivity {
         TextView tvFollowing = (TextView) findViewById(R.id.tvFollowing);
         TextView tvNumTweets = (TextView) findViewById(R.id.tvNumTweets);
         ImageView ivProfileImage = (ImageView) findViewById(R.id.ivProfileImage);
+        ImageView ivBackgroundImage = (ImageView) findViewById(R.id.ivBackgroundImage);
 
-        tvName.setText(user.getName());
+        tvName.setText(user.getScreenName());
         tvTagline.setText(user.getDescription());
-        tvFollowers.setText(user.getFollowersCount() + " Followers");
-        tvFollowing.setText(user.getFriendsCount() + " Following");
-        tvNumTweets.setText(user.getTweetsCount() + " Tweets");
+        tvFollowers.setText(user.getDisplayFollowersCount());
+        tvFollowing.setText(user.getDisplayFriendsCount());
+        tvNumTweets.setText(user.getDisplayTweetsCount());
         Picasso.with(this).load(user.getProfileImageUrl()).into(ivProfileImage);
+
+        // Optionally load background image
+        if (user.getBackgroundImageUrl().length() > 0) {
+            //Picasso.with(this).load(user.getBackgroundImageUrl()).into(ivBackgroundImage);
+        }
+
     }
 
 
