@@ -21,7 +21,14 @@ public class User extends Model implements Parcelable {
         super();
     }
 
-    public User(String name, String screenName, long uid, String profileImageUrl, String description, int followersCount, int friendsCount) {
+    public User(String name,
+                String screenName,
+                long uid,
+                String profileImageUrl,
+                String description,
+                int followersCount,
+                int friendsCount,
+                int statusesCount) {
         this.name = name;
         this.uid = uid;
         this.screenName = screenName;
@@ -29,6 +36,7 @@ public class User extends Model implements Parcelable {
         this.description = description;
         this.followersCount = followersCount;
         this.friendsCount = friendsCount;
+        this.statusesCount = statusesCount;
     }
 
     public String getName() {
@@ -63,6 +71,10 @@ public class User extends Model implements Parcelable {
         return followersCount;
     }
 
+    public int getTweetsCount() {
+        return statusesCount;
+    }
+
     // List Attributes
     @Column(name = "name")
     private String name;
@@ -85,6 +97,10 @@ public class User extends Model implements Parcelable {
     @Column(name = "friends_count")
     private int friendsCount;
 
+    @Column(name = "statuses_count")
+    private int statusesCount;
+
+
 
     //deserialize the user json => user
     public static User fromJson(JSONObject json) {
@@ -98,6 +114,7 @@ public class User extends Model implements Parcelable {
             u.description = json.getString("description");
             u.followersCount = json.getInt("followers_count");
             u.friendsCount = json.getInt("friends_count");
+            u.statusesCount = json.getInt("statuses_count");
         } catch (JSONException e) {
             e.printStackTrace();
         }
@@ -134,6 +151,7 @@ public class User extends Model implements Parcelable {
         dest.writeString(description);
         dest.writeInt(followersCount);
         dest.writeInt(friendsCount);
+        dest.writeInt(statusesCount);
     }
 
     private User(Parcel in) {
@@ -144,6 +162,7 @@ public class User extends Model implements Parcelable {
         description = in.readString();
         followersCount = in.readInt();
         friendsCount = in.readInt();
+        statusesCount = in.readInt();
     }
 
     public static Parcelable.Creator<User> CREATOR = new Creator<User>() {
@@ -157,6 +176,5 @@ public class User extends Model implements Parcelable {
             return new User[size];
         }
     };
-
 
 }
