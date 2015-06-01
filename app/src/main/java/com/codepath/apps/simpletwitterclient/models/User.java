@@ -12,6 +12,7 @@ import com.activeandroid.query.Select;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.text.DecimalFormat;
 import java.util.List;
 
 @Table(name = "Users")
@@ -79,6 +80,19 @@ public class User extends Model implements Parcelable {
 
     public String getBackgroundImageUrl() {
         return backgroundImageUrl;
+    }
+
+    // Display getters
+    public String getDisplayFriendsCount() {
+        return getDisplayNumber(friendsCount);
+    }
+
+    public String getDisplayFollowersCount() {
+        return getDisplayNumber(followersCount);
+    }
+
+    public String getDisplayTweetsCount() {
+        return getDisplayNumber(statusesCount);
     }
 
     // List Attributes
@@ -193,5 +207,13 @@ public class User extends Model implements Parcelable {
             return new User[size];
         }
     };
+
+    /**
+     * Gets a display number
+     */
+    private String getDisplayNumber(int num) {
+        DecimalFormat formatter = new DecimalFormat("#,###,###");
+        return formatter.format(num);
+    }
 
 }
