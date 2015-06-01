@@ -1,6 +1,9 @@
 package com.codepath.apps.simpletwitterclient.models;
 
 
+import android.os.Parcel;
+import android.os.Parcelable;
+
 import com.activeandroid.Model;
 import com.activeandroid.annotation.Column;
 import com.activeandroid.annotation.Table;
@@ -12,7 +15,7 @@ import org.json.JSONObject;
 import java.util.List;
 
 @Table(name = "Users")
-public class User extends Model {
+public class User extends Model implements Parcelable {
 
     public User() {
         super();
@@ -114,5 +117,46 @@ public class User extends Model {
 
         return Users.get(0);
     }
+
+    // Parcel
+
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    @Override
+    public void writeToParcel(Parcel dest, int flags) {
+        dest.writeString(name);
+        dest.writeLong(uid);
+        dest.writeString(screenName);
+        dest.writeString(profileImageUrl);
+        dest.writeString(description);
+        dest.writeInt(followersCount);
+        dest.writeInt(friendsCount);
+    }
+
+    private User(Parcel in) {
+        name = in.readString();
+        uid = in.readLong();
+        screenName = in.readString();
+        profileImageUrl = in.readString();
+        description = in.readString();
+        followersCount = in.readInt();
+        friendsCount = in.readInt();
+    }
+
+    public static Parcelable.Creator<User> CREATOR = new Creator<User>() {
+        @Override
+        public User createFromParcel(Parcel source) {
+            return new User(source);
+        }
+
+        @Override
+        public User[] newArray(int size) {
+            return new User[size];
+        }
+    };
+
 
 }
