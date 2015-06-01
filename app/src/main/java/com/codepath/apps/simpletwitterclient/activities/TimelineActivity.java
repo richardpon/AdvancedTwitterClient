@@ -15,6 +15,8 @@ import com.codepath.apps.simpletwitterclient.R;
 import com.codepath.apps.simpletwitterclient.fragments.HomeTimelineFragment;
 import com.codepath.apps.simpletwitterclient.fragments.MentionsTimelineFragment;
 import com.codepath.apps.simpletwitterclient.fragments.TweetsListFragment;
+import com.codepath.apps.simpletwitterclient.models.SignedInUser;
+import com.codepath.apps.simpletwitterclient.models.User;
 
 public class TimelineActivity extends ActionBarActivity {
 
@@ -116,7 +118,11 @@ public class TimelineActivity extends ActionBarActivity {
     */
 
     public void onProfileView(MenuItem mi) {
+
+        User user = SignedInUser.getSignedInUser(this);
+
         Intent i = new Intent(this, ProfileActivity.class);
+        i.putExtra("user", user);
         startActivity(i);
     }
 

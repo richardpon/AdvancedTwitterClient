@@ -11,7 +11,6 @@ import android.widget.TextView;
 
 import com.codepath.apps.simpletwitterclient.R;
 import com.codepath.apps.simpletwitterclient.fragments.UserTimelineFragment;
-import com.codepath.apps.simpletwitterclient.models.SignedInUser;
 import com.codepath.apps.simpletwitterclient.models.User;
 import com.codepath.apps.simpletwitterclient.networking.TwitterClient;
 import com.squareup.picasso.Picasso;
@@ -26,18 +25,18 @@ public class ProfileActivity extends ActionBarActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_profile);
 
-        user = SignedInUser.getSignedInUser(this);
-        getSupportActionBar().setTitle(user.getScreenName());
-
+        getSupportActionBar().setTitle("Profile");
 
         // Get the screen name from the activity that launches this
-        String screenName = getIntent().getStringExtra("screen_name");
+
+        User user = (User) getIntent().getParcelableExtra("user");
+
 
         populateProfileHeader(user);
 
         if (savedInstanceState == null) {
             // Create the user timeline fragment
-            UserTimelineFragment userTimelineFragment = UserTimelineFragment.newInstance(screenName);
+            UserTimelineFragment userTimelineFragment = UserTimelineFragment.newInstance(user.getScreenNameRaw());
             // Display user timeline fragment within this activity (dynamically)
             FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
             ft.replace(R.id.flContainer, userTimelineFragment);
