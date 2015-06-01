@@ -1,6 +1,7 @@
 package com.codepath.apps.simpletwitterclient.adapters;
 
 import android.content.Context;
+import android.content.Intent;
 import android.content.res.AssetManager;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -10,7 +11,9 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.codepath.apps.simpletwitterclient.R;
+import com.codepath.apps.simpletwitterclient.activities.ProfileActivity;
 import com.codepath.apps.simpletwitterclient.models.Tweet;
+import com.codepath.apps.simpletwitterclient.models.User;
 import com.squareup.picasso.Picasso;
 
 import java.util.List;
@@ -67,6 +70,11 @@ public class TweetsArrayAdapter extends ArrayAdapter<Tweet>{
 
         Picasso.with(getContext()).load(tweet.getUser().getProfileImageUrl()).into(viewHolder.profileImage);
 
+        // Put the user's ID into the user's profile image
+        viewHolder.profileImage.setTag(tweet.getUser().getUid());
+        // Set up a listener for for clicking on profile image
+        setUpListenerForProfileImage(viewHolder.profileImage);
+
         // Conditionally load MediaImage if it exists
         viewHolder.mediaImage.setImageResource(android.R.color.transparent); //clear out image for recycled view
         viewHolder.mediaImage.setVisibility(View.GONE);
@@ -76,5 +84,22 @@ public class TweetsArrayAdapter extends ArrayAdapter<Tweet>{
         }
 
         return convertView;
+    }
+
+    private void setUpListenerForProfileImage(ImageView ivProfileImage) {
+        ivProfileImage.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                // Get the user
+                long userId = (long) v.getTag();
+                User user = User.getUserWithId(userId);
+
+                // Open Profile page
+                Intent i = new Intent(getContext(), ProfileActivity.class);
+                i.putExtra("user", user);
+                getContext().startActivity(i);
+            }
+        });
     }
 }
