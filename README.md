@@ -1,6 +1,6 @@
-# Project 3 - *Simple Twitter Client*
+# Project 4 - *Just Teet*
 
-**Simple Twitter Client** is an android app that allows a user to view his Twitter timeline and post a new tweet. The app utilizes [Twitter REST API](https://dev.twitter.com/rest/public).
+**Just Tweet** is an android app that allows a user to view home and mentions timelines, view user profiles with user timelines, as well as compose and post a new tweet. The app utilizes [Twitter REST API](https://dev.twitter.com/rest/public).
 
 Time spent: **20** hours spent in total
 
@@ -8,51 +8,54 @@ Time spent: **20** hours spent in total
 
 The following **required** functionality is completed:
 
-* [x]	User can **sign in to Twitter** using OAuth login
-* [x]	User can **view tweets from their home timeline**
-  * [x] User is displayed the username, name, and body for each tweet
-  * [x] User is displayed the [relative timestamp](https://gist.github.com/nesquena/f786232f5ef72f6e10a7) for each tweet "8m", "7h"
-  * [x] User can view more tweets as they scroll with [infinite pagination](http://guides.codepath.com/android/Endless-Scrolling-with-AdapterViews). Number of tweets is unlimited.
-    However there are [Twitter Api Rate Limits](https://dev.twitter.com/rest/public/rate-limiting) in place.
-* [x] User can **compose and post a new tweet**
-  * [x] User can click a “Compose” icon in the Action Bar on the top right
-  * [x] User can then enter a new tweet and post this to twitter
-  * [x] User is taken back to home timeline with **new tweet visible** in timeline
+* [x] The app includes **all required user stories** from Week 3 Twitter Client
+* [x] User can **switch between Timeline and Mention views using tabs**
+  * [x] User can view their home timeline tweets.
+  * [x] User can view the recent mentions of their username.
+* [x] User can navigate to **view their own profile**
+  * [x] User can see picture, tagline, # of followers, # of following, and tweets on their profile.
+* [x] User can **click on the profile image** in any tweet to see **another user's** profile.
+ * [x] User can see picture, tagline, # of followers, # of following, and tweets of clicked user.
+ * [x] Profile view includes that user's timeline
+* [x] User can [infinitely paginate](http://guides.codepath.com/android/Endless-Scrolling-with-AdapterViews) any of these timelines (home, mentions, user) by scrolling to the bottom
 
 The following **optional** features are implemented:
 
-* [x] User can **see a counter with total number of characters left for tweet** on compose tweet page
-* [ ] User can **click a link within a tweet body** on tweet details view. The click will launch the web browser with relevant page opened.
-* [x] User can **pull down to refresh tweets timeline**
-* [x] User can **open the twitter app offline and see last loaded tweets**. Persisted in SQLite tweets are refreshed on every application launch. While "live data" is displayed when app can get it from Twitter API, it is also saved for use in offline mode.
-* [ ] User can tap a tweet to **open a detailed tweet view**
-* [ ] User can **select "reply" from detail view to respond to a tweet**
-* [x] Improve the user interface and theme the app to feel "twitter branded"
+* [x] User can view following / followers list through the profile
+* [x] Implements robust error handling, [check if internet is available](http://guides.codepath.com/android/Sending-and-Managing-Network-Requests#checking-for-network-connectivity), handle error cases, network failures
+* [ ] When a network request is sent, user sees an [indeterminate progress indicator](http://guides.codepath.com/android/Handling-ProgressBars#progress-within-actionbar)
+* [ ] User can **"reply" to any tweet on their home timeline**
+  * [ ] The user that wrote the original tweet is automatically "@" replied in compose
+* [ ] User can click on a tweet to be **taken to a "detail view"** of that tweet
+ * [ ] User can take favorite (and unfavorite) or retweet actions on a tweet
+* [x] Improve the user interface and theme the app to feel twitter branded
+* [ ] User can **search for tweets matching a particular query** and see results
 
 The following **bonus** features are implemented:
 
-* [x] User can see embedded image media within the tweet detail view
-* [ ] Compose tweet functionality is build using modal overlay
+* [ ] User can view their direct messages (or send new ones)
 
 The following **additional** features are implemented:
 
-* [ ] List anything else that you can get done to improve the app functionality!
+* [x] Pull to refresh
+* [x] User can see embedded image media within the tweet detail view
+* [x] User can **see a counter with total number of characters left for tweet** on compose tweet page
+* [x] Tweets are cached and can be viewed offline
 
 ## Video Walkthrough 
 
 Here's a walkthrough of implemented user stories:
 
-<img src='https://github.com/richardpon/SimpleTwitterClient/blob/master/simple_twitter_walkthrough.gif' title='Video Walkthrough' width='' alt='Video Walkthrough' />
+<img src='https://github.com/richardpon/AdvancedTwitterClient/blob/master/advance_twitter_walkthrough.gif' title='Video Walkthrough' width='' alt='Video Walkthrough' />
 
 GIF created with [LiceCap](http://www.cockos.com/licecap/).
 
 ## Notes
 
-Here were some challenges encountered when creating this app:
-* Using custom typefaces for the Tweets in the ListView didn't work. I tried following the [cliffnotes](http://guides.codepath.com/android/Working-with-the-TextView) and creating a custom TextView following [this post](http://stackoverflow.com/questions/13666108/customize-adapter-to-use-custom-font), but ran into issues. Nathan suggested using the [Calligraphy](https://github.com/chrisjenx/Calligraphy) library, but I didn't have enough time to revisit this.
-* I ran into Twitter Rate Limiting quite often. When I could, I worked around this by commenting out the code that fetches new Tweets, but there were times when I actually had to test the code.
-* It took a lot of experimentation to find a reliable way to check for network connectivity inside the emulator. I tried both methods in the [guide] (http://guides.codepath.com/android/Sending-and-Managing-Network-Requests#checking-for-network-connectivity). I discovered that the first method works when I put the emulator into airplane mode.
-* It took some time to use Cached Tweets from SQLite in the case that the network isn't available. I had a bug where new tweets were being adding to the adapter, but they weren't visible because older tweets were in "front" of the newer ones.
+Describe any challenges encountered while building the app.
+* Twitter API rate limiting made testing a little slower
+* Communication between fragments and their parent fragments and parent activities took some time to get used to.
+
 
 ## Open-source libraries used
 
