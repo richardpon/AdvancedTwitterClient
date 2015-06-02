@@ -56,6 +56,7 @@ Describe any challenges encountered while building the app.
 * Twitter API rate limiting made testing a little slower
 * Communication between fragments and their parent fragments and parent activities took some time to get used to.
 * Hit some NullPointerExceptions due to not always using the appropriate onCreate method.
+* When network is down, there's a bug that all tweets are shown in all views, including the mentions and profile. I tried to ad a like in the where clause for Active Android for these cases, but didn't get it working.
 
 
 ## Open-source libraries used
