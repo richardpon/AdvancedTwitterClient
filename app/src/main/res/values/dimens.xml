@@ -4,4 +4,8 @@
     <dimen name="activity_horizontal_margin">16dp</dimen>
     <dimen name="activity_vertical_margin">16dp</dimen>
 
+
+    <!-- PROFILE -->
+    <dimen name="profile_count_divider_margin">35dp</dimen>
+
 </resources>

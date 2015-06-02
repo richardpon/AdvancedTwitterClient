@@ -120,8 +120,8 @@
             android:background="@color/twitter_blue"
             android:layout_toRightOf="@id/llTweets"
             android:layout_toEndOf="@+id/llTweets"
-            android:layout_marginLeft="30dp"
-            android:layout_marginStart="30dp"
+            android:layout_marginLeft="@dimen/profile_count_divider_margin"
+            android:layout_marginStart="@dimen/profile_count_divider_margin"
             android:layout_marginTop="5dp"
             />
 
@@ -134,8 +134,8 @@
             android:orientation="vertical"
             android:layout_toRightOf="@id/vDividerVerticalAfterTweets"
             android:layout_toEndOf="@+id/vDividerVerticalAfterTweets"
-            android:layout_marginLeft="30dp"
-            android:layout_marginStart="30dp"
+            android:layout_marginLeft="@dimen/profile_count_divider_margin"
+            android:layout_marginStart="@dimen/profile_count_divider_margin"
             >
 
             <!-- Num Following -->
@@ -167,8 +167,8 @@
             android:background="@color/twitter_blue"
             android:layout_toRightOf="@id/llFollowing"
             android:layout_toEndOf="@+id/llFollowing"
-            android:layout_marginLeft="30dp"
-            android:layout_marginStart="30dp"
+            android:layout_marginLeft="@dimen/profile_count_divider_margin"
+            android:layout_marginStart="@dimen/profile_count_divider_margin"
             android:layout_marginTop="5dp"
             />
 
@@ -180,8 +180,8 @@
             android:orientation="vertical"
             android:layout_toRightOf="@id/vDividerVerticalAfterFollowing"
             android:layout_toEndOf="@+id/vDividerVerticalAfterFollowing"
-            android:layout_marginLeft="30dp"
-            android:layout_marginStart="30dp"
+            android:layout_marginLeft="@dimen/profile_count_divider_margin"
+            android:layout_marginStart="@dimen/profile_count_divider_margin"
             >
 
             <!-- Followers -->
