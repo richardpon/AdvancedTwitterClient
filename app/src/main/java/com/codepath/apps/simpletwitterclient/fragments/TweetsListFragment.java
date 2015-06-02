@@ -113,7 +113,10 @@ public abstract class TweetsListFragment extends Fragment{
             Toaster.create(getActivity(), "Sorry, the network appears to be down. Showing cached data");
             Toaster.create(getActivity(), "Pull to refresh to try again");
             loadTweetsFromCache();
-            swipeContainer.setRefreshing(false);
+            if (swipeContainer != null) {
+                swipeContainer.setRefreshing(false);
+            }
+
         }
     }
 
