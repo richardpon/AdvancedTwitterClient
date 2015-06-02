@@ -24,6 +24,11 @@ public class HomeTimelineFragment extends TweetsListFragment{
 
     private final static String TAG = "HomeTimelineFragment";
 
+    public static HomeTimelineFragment newInstance() {
+        HomeTimelineFragment homeTimelineFragment = new HomeTimelineFragment();
+        return homeTimelineFragment;
+    }
+
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);

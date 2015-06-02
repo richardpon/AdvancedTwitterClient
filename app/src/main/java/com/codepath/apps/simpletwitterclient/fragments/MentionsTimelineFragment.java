@@ -22,6 +22,11 @@ public class MentionsTimelineFragment extends TweetsListFragment {
 
     private final static String TAG = "MentionsTimelineFragment";
 
+    public static MentionsTimelineFragment newInstance() {
+        MentionsTimelineFragment mentionsTimelineFragment = new MentionsTimelineFragment();
+        return mentionsTimelineFragment;
+    }
+
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);

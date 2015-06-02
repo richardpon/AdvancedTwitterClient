@@ -95,7 +95,7 @@ public abstract class TweetsListFragment extends Fragment{
      * This gets tweets for the first time. It will either fetch from the network if available
      * or load from persistent cache
      */
-    protected void loadTweets() {
+    public void loadTweets() {
 
         Network network = new Network();
         if (network.isNetworkAvailable(getActivity())) {
