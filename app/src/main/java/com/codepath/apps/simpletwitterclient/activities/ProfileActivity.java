@@ -3,6 +3,7 @@ package com.codepath.apps.simpletwitterclient.activities;
 
 import android.os.Bundle;
 import android.support.v4.app.FragmentTransaction;
+import android.support.v4.app.NavUtils;
 import android.support.v7.app.ActionBarActivity;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -21,10 +22,13 @@ public class ProfileActivity extends ActionBarActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_profile);
 
+        // Enable Up navigation
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+
+        // Set Title
         getSupportActionBar().setTitle("Profile");
 
         // Get the screen name from the activity that launches this
-
         User user = (User) getIntent().getParcelableExtra("user");
 
 
@@ -70,6 +74,13 @@ public class ProfileActivity extends ActionBarActivity {
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
         getMenuInflater().inflate(R.menu.menu_profile, menu);
+
+        // Show Twitter logo
+        android.support.v7.app.ActionBar actionBar = getSupportActionBar();
+        actionBar.setDisplayShowHomeEnabled(true);
+        actionBar.setLogo(R.drawable.ic_twitter);
+        actionBar.setDisplayUseLogoEnabled(true);
+
         return true;
     }
 
@@ -82,6 +93,12 @@ public class ProfileActivity extends ActionBarActivity {
 
         //noinspection SimplifiableIfStatement
         if (id == R.id.action_settings) {
+            return true;
+        }
+
+        // Respond to Up navigation. Return to previous TimelineActivity state
+        if (id == android.R.id.home) {
+            NavUtils.navigateUpFromSameTask(this);
             return true;
         }
 
