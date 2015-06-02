@@ -91,11 +91,6 @@ public class ProfileActivity extends ActionBarActivity {
         // as you specify a parent activity in AndroidManifest.xml.
         int id = item.getItemId();
 
-        //noinspection SimplifiableIfStatement
-        if (id == R.id.action_settings) {
-            return true;
-        }
-
         // Respond to Up navigation. Return to previous TimelineActivity state
         if (id == android.R.id.home) {
             NavUtils.navigateUpFromSameTask(this);
