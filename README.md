@@ -55,6 +55,7 @@ GIF created with [LiceCap](http://www.cockos.com/licecap/).
 Describe any challenges encountered while building the app.
 * Twitter API rate limiting made testing a little slower
 * Communication between fragments and their parent fragments and parent activities took some time to get used to.
+* Hit some NullPointerExceptions due to not always using the appropriate onCreate method.
 
 
 ## Open-source libraries used
