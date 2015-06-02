@@ -96,6 +96,7 @@ public class HomeTimelineFragment extends TweetsListFragment{
                 //swipeContainer.setRefreshing(false);
             }
         });
+        super.loadTweetsFromNetwork();
     }
 
     /**

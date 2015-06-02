@@ -48,9 +48,6 @@ public class TimelineActivity extends ActionBarActivity {
 //            fragmentTweetsList = (TweetsListFragment) getSupportFragmentManager().findFragmentById(R.id.fragment_timeline);
 //        }
 
-        // Pull to Refresh
-        //setUpPullToRefresh();
-
     }
 
 
@@ -96,27 +93,6 @@ public class TimelineActivity extends ActionBarActivity {
             }
         }
     }
-
-    /**
-     * Sets up the pull to refresh functionality
-     */
-    /*
-    private void setUpPullToRefresh() {
-        swipeContainer = (SwipeRefreshLayout) findViewById(R.id.swipeContainer);
-        swipeContainer.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
-            @Override
-            public void onRefresh() {
-                clearTweets();
-                loadNewTweets();
-            }
-        });
-
-        swipeContainer.setColorSchemeResources(android.R.color.holo_blue_bright,
-                android.R.color.holo_green_light,
-                android.R.color.holo_orange_light,
-                android.R.color.holo_red_light);
-    }
-    */
 
     public void onProfileView(MenuItem mi) {
 

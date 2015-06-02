@@ -52,6 +52,13 @@ public abstract class TweetsListFragment extends Fragment{
         return v;
     }
 
+    @Override
+    public void onActivityCreated(@Nullable Bundle savedInstanceState) {
+        super.onActivityCreated(savedInstanceState);
+
+        // Pull to Refresh
+        setUpPullToRefresh();
+    }
 
     //creation lifecycle event
     @Override
@@ -87,9 +94,11 @@ public abstract class TweetsListFragment extends Fragment{
     /**
      * Loads tweets into the timeline from the network
      */
-    protected abstract void loadTweetsFromNetwork();
-
-
+    protected void loadTweetsFromNetwork() {
+        if (swipeContainer != null) {
+            swipeContainer.setRefreshing(false);
+        }
+    }
 
     /**
      * This gets tweets for the first time. It will either fetch from the network if available
@@ -100,13 +109,11 @@ public abstract class TweetsListFragment extends Fragment{
         Network network = new Network();
         if (network.isNetworkAvailable(getActivity())) {
             loadTweetsFromNetwork();
-            //fetchSignedInUsersProfile();
-
         } else {
             Toaster.create(getActivity(), "Sorry, the network appears to be down. Showing cached data");
             Toaster.create(getActivity(), "Pull to refresh to try again");
             loadTweetsFromCache();
-            //swipeContainer.setRefreshing(false);
+            swipeContainer.setRefreshing(false);
         }
     }
 
@@ -135,4 +142,24 @@ public abstract class TweetsListFragment extends Fragment{
             }
         });
     }
+
+    /**
+     * Sets up the pull to refresh functionality
+     */
+    private void setUpPullToRefresh() {
+        swipeContainer = (SwipeRefreshLayout) getActivity().findViewById(R.id.swipeContainer);
+        swipeContainer.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+            @Override
+            public void onRefresh() {
+                clearTweets();
+                loadTweets();
+            }
+        });
+
+        swipeContainer.setColorSchemeResources(android.R.color.holo_blue_bright,
+                android.R.color.holo_green_light,
+                android.R.color.holo_orange_light,
+                android.R.color.holo_red_light);
+    }
+
 }

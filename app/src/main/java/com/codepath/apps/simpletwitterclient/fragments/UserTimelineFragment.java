@@ -98,6 +98,7 @@ public class UserTimelineFragment extends TweetsListFragment {
                 //swipeContainer.setRefreshing(false);
             }
         });
+        super.loadTweetsFromNetwork();
     }
 
 
