@@ -89,6 +89,7 @@ public class MentionsTimelineFragment extends TweetsListFragment {
                 //swipeContainer.setRefreshing(false);
             }
         });
+        super.loadTweetsFromNetwork();
     }
 
     /**
